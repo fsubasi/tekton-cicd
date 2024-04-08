@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tekton
+  namespace: hello-app
+  labels:
+    app: tekton
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tekton
+  template:
+    metadata:
+      labels:
+        app: tekton
+    spec:
+      containers:
+        - name: tekton
+          image: fsubasi/tekton:main-3537be4e-1712528660
