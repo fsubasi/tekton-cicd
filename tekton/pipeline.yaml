@@ -1,0 +1,224 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: ci-cd
+spec:
+  description: |
+      This is a pipeline template which performs the follwing tasks:
+      - Clones a subset of file for one microservice from a mono-repo
+        e.g. vote/* result/* worker/* matching patterns provided.
+      - Lists all the files from the cloned workspace to validate if 
+        it has cloned the correct subpath matching your microservice. 
+      - Builds a container image from the workspace which contains 
+        the Dockerfile. It accepts imageUrl and imageTag params to 
+        define the tag.  The same task also pushes the image to the 
+        registry. 
+      Some of the additional  notable features of this template include:
+      - Cloned repo is passed to subsequent Tasks using a Workspace. 
+      - Orders Tasks in a Pipeline using "runAfter" so that
+        git-clone completes before we try to read from the Workspace 
+        to find the Dockerfile and build an image.
+      - Uses a volumeClaimTemplate Volume as a Workspace.
+      - Uses a secret generated with config.json and mounts it 
+        as a worksapce with name dockerconfig to provide registry 
+        credentials. 
+      - Avoids hard-coded paths by using a Workspace's path
+        variable instead.
+  params:
+  - name: repoUrl
+    type: string
+    description: The git repository URL to clone from.
+  - name: revision
+    type: string
+    description: The git branch,tag,sha etc. to fetch
+  - name: sparseCheckoutDirectories
+    type: string
+    description: directory patterns to clone
+  - name: imageUrl
+    type: string
+    description: URL of image repository in user/repo format. Do not provide the tag. e.g. dopsdemo/vote
+    default: user/repo
+  - name: imageTag
+    type: string
+    description: Tag to apply to the built image.
+    default: latest
+  - name: pathToContext
+    type: string
+    description: The path to the build context relative to your source repo's root. This is used by Kaniko.
+    default: .
+  - name: pathToDockerFile
+    type: string
+    description: The path to the dockerfile to build, relative to the context.
+    default: Dockerfile
+  - name: ARGS
+    type: array
+    description: The Arguments to be passed to Trivy command for file system scan
+  - name: IMAGEARGS
+    description: Image or Path to be scanned by trivy.
+    type: array    
+  workspaces:
+  - name: shared-data
+    description: |
+      This workspace will receive the cloned git repo and be passed
+      to the next Task to list all cloned files and directories.
+  - name: dockerconfig
+    description: |
+      Add docker's config.json file as a secret and provide it as a reference. 
+  tasks:
+  - name: fetch-repo
+    taskRef:
+      name: git-clone
+    workspaces:
+    - name: output
+      workspace: shared-data
+    params:
+    - name: url
+      value: $(params.repoUrl)
+    - name: revision
+      value: $(params.revision)
+
+  - name: run-test
+    taskRef:
+      name: golang-test
+    runAfter:
+      - fetch-repo
+    workspaces:
+      - name: source
+        workspace: shared-data
+    params:
+      - name: package
+        value: $(params.repoUrl)
+      - name: packages
+        value: $(params.repoUrl)        
+      - name: GOARCH
+        value: ""
+  - name: run-build
+    taskRef:
+      name: golang-build
+    runAfter:
+      - fetch-repo
+    workspaces:
+      - name: source
+        workspace: shared-data
+    params:
+      - name: package
+        value: $(params.repoUrl)
+      - name: packages
+        value: $(params.repoUrl)
+
+  - name: trivy-scan-local-fs
+    taskRef:
+      name: trivy-scanner
+      kind: Task
+    runAfter:
+      - fetch-repo
+      - run-build
+    params:
+      - name: ARGS
+        value:
+          - $(params.ARGS[*])
+      - name: IMAGE_PATH
+        value: .
+    workspaces:
+      - name: manifest-dir
+        workspace: shared-data
+
+  - name: trivy-scan-image
+    taskRef:
+      name: trivy-scanner
+      kind: Task
+    runAfter:
+      - img-build-publish
+    params:
+      - name: ARGS
+        value:
+          - $(params.IMAGEARGS[*])
+      - name: IMAGE_PATH
+        value: $(params.imageUrl)
+    workspaces:
+      - name: manifest-dir
+        workspace: shared-data
+        
+           
+  - name: misc
+    runAfter: ["fetch-repo"]  # Wait until the clone is done before listing all files and directories cloned
+    workspaces:
+    - name: source
+      workspace: shared-data
+    params: 
+    - name: commit-hash
+      value: $(tasks.fetch-repo.results.commit)
+    taskSpec:
+      workspaces:
+      - name: source
+      params: 
+      - name: commit-hash
+      results: 
+      - name: current-ts
+      - name: short-sha
+      steps:
+      - image: zshusers/zsh:4.3.15
+        script: |
+          #!/usr/bin/env zsh
+          ls -R $(workspaces.source.path)/
+        resources: 
+          requests: 
+            memory: 64Mi 
+            cpu: 100m 
+          limits: 
+            memory: 128Mi 
+            cpu: 200m
+      - name: print-date-unix-timestamp
+        image: bash:latest
+        script: |
+          #!/usr/bin/env bash
+          date +%s | tr -d '\n' |  tee $(results.current-ts.path)
+        resources:
+          requests:
+            memory: 64Mi
+            cpu: 100m
+          limits:
+            memory: 128Mi
+            cpu: 200m
+      - name: shorten-commit-hash
+        image: bash:latest
+        script: |
+          #!/usr/bin/env bash
+          echo $(params.commit-hash) | cut -c -8 | tr -d '\n'|  tee $(results.short-sha.path)
+        resources:
+          requests:
+            memory: 64Mi
+            cpu: 100m
+          limits:
+            memory: 128Mi
+            cpu: 200m
+
+  - name: img-build-publish
+    taskRef:
+      name: kaniko
+    runAfter:
+    - misc
+    - run-build
+    - trivy-scan-local-fs
+    workspaces:
+    - name: source
+      workspace: shared-data
+    - name: dockerconfig
+      workspace: dockerconfig
+    params:
+    - name: CONTEXT
+      value: '$(params.pathToContext)'
+    - name: IMAGE
+      value: '$(params.imageUrl):$(params.revision)-$(tasks.misc.results.short-sha)-$(tasks.misc.results.current-ts)'
+    - name: EXTRA_ARGS
+      value: [ "--skip-tls-verify" ]
+
+  - name: deploy-locally
+    taskRef:
+      name: deploy-locally
+    # runAfter:
+    # - scan-image        
+    params:
+    - name: IMAGE
+      value: '$(params.imageUrl):$(params.revision)-$(tasks.misc.results.short-sha)-$(tasks.misc.results.current-ts)' 
+   
