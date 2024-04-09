@@ -8,6 +8,7 @@ This repo shows a sample of a Tekton Pipeline that performs the actions below.
 - Build and Push image to the registry via Kaniko.
 - Scan files and image with Trivy.
 - Deploy the Kubernets manifests via Helm.
+- 
 
 Pre-requisites:
 
