@@ -1,5 +1,5 @@
-# tekton-task
-Repo shows a sample of a Tekton Pipeline that performs the actions below.
+# Tekton ci/cd pipeline for a Golang application
+This repo shows a sample of a Tekton Pipeline that performs the actions below.
 
 - Fetch the repo.
 - Compile the Go application.
