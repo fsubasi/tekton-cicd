@@ -78,6 +78,42 @@ Steps:
 
   9 `kubectl apply -f ./rbac-for-trigger/rbac.yaml`
 
+- Create namesapce, role and rolebinding for deploying the app
+
+Apply this role file 
+
+```bash
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: go-app
+  name: tekton-secrets-role
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list"]
+```
+
+Apply this rolebinding file
+
+
+```bash
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: tekton-secrets-role-binding
+  namespace: go-app
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: default
+roleRef:
+  kind: Role
+  name: tekton-secrets-role
+  apiGroup: rbac.authorization.k8s.io
+```
+
+
 
 
 #Notes
