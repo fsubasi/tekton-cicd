@@ -118,5 +118,5 @@ roleRef:
 
 #Notes
 
-Sometimes ngrok dns might be changed if you are using the free version. At this time, you need to update the payload url of the github webhook with the new dns.
+Sometimes ngrok dns might be changed if you are using the free version. At this time, you need to update the payload url of the github webhook with the new dns!
 
