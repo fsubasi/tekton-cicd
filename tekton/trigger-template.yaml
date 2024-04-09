@@ -59,8 +59,8 @@ spec:
       - name: RELEASE_NAME
         value: go-app
       - name: CHART_PATH
-        value: k8s
+        value: $(workspaces.source.path)/k8s
       - name: IMAGE
-        value: "$(params.imageUrl):$(params.revision)-$(tasks.misc.results.short-sha)-$(tasks.misc.results.current-ts)" 
+        value: "" 
       - name: NAMESPACE 
         value: go-app          

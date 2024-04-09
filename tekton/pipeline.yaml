@@ -222,19 +222,22 @@ spec:
     - name: IMAGE
       value: '$(params.imageUrl):$(params.revision)-$(tasks.misc.results.short-sha)-$(tasks.misc.results.current-ts)'
     - name: EXTRA_ARGS
-      value: [ "--skip-tls-verify" ]
+      value: [ "--skip-tls-verify" ]      
 
   - name: deploy
     runAfter: 
     - img-build-publish
+    workspaces:
+    - name: source
+      workspace: shared-data    
     taskRef:
       name: helm-upgrade
     params:
     - name: RELEASE_NAME
       value: go-app
     - name: CHART_PATH
-      value: k8s/
+      value: $(workspaces.source.path)/k8s
     - name: IMAGE
-      value: "$(params.imageUrl):$(params.revision)-$(tasks.misc.results.short-sha)-$(tasks.misc.results.current-ts)" 
+      value: "$(params.revision)-$(tasks.misc.results.short-sha)-$(tasks.misc.results.current-ts)"  
     - name: NAMESPACE 
       value: go-app

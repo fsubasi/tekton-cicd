@@ -12,6 +12,8 @@ spec:
       description: The new image to use in the deployment.
     - name: NAMESPACE
       description: The namespace where the Helm release should be installed/upgraded.
+  workspaces:
+    - name: source    
   steps:
     - name: helm-upgrade
       image: alpine/helm:3.8.0
