@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: helm-upgrade
+spec:
+  params:
+    - name: RELEASE_NAME
+      description: The name of the Helm release.
+    - name: CHART_PATH
+      description: The path to the Helm chart.
+    - name: IMAGE
+      description: The new image to use in the deployment.
+    - name: NAMESPACE
+      description: The namespace where the Helm release should be installed/upgraded.
+  steps:
+    - name: helm-upgrade
+      image: alpine/helm:3.8.0
+      command:
+        - sh
+        - -c
+      args:
+        - helm upgrade $(params.RELEASE_NAME) $(params.CHART_PATH) --set image.tag=$(params.IMAGE) --namespace $(params.NAMESPACE) --wait --install

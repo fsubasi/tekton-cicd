@@ -41,6 +41,14 @@ spec:
     value:
       - image
       - --exit-code
-      - "0"      
+      - "0"
+  - name: RELEASE_NAME
+    value: go-app
+  - name: CHART_PATH
+    value: k8s
+  - name: IMAGE
+    value: "$(params.imageUrl):$(params.revision)-$(tasks.misc.results.short-sha)-$(tasks.misc.results.current-ts)"            
+  - name: NAMESPACE
+    value: go-app    
     
 
