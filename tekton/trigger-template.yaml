@@ -1,0 +1,66 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: github-pr-trigger-template
+spec:
+  params:
+  - name: revision
+    default: main
+  - name: repoUrl
+    default: https://github.com/fsubasi/tekton-cicd.git
+  - name: sparseCheckoutDirectories
+  - name: ARGS
+  - name: IMAGEARGS
+  - name: RELEASE_NAME
+  - name: CHART_PATH
+  - name: IMAGE
+  - name: NAMESPACE 
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: git-triggerred-pipeline-
+    spec:
+      pipelineRef:
+        name: ci-cd
+      workspaces:
+      - name: shared-data
+        volumeClaimTemplate:
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+      - name: dockerconfig
+        secret:
+          secretName: dockerhub-creds                
+      params:
+      - name: repoUrl
+        value: $(tt.params.repoUrl)
+      - name: revision
+        value: $(tt.params.revision)
+      - name: sparseCheckoutDirectories
+        value: .
+      - name: imageUrl
+        value: fsubasi/tekton
+      - name: pathToContext
+        value: .
+      - name: ARGS  
+        value:
+          - fs
+          - --exit-code
+          - "1"
+      - name: IMAGEARGS
+        value:
+          - image
+          - --exit-code
+          - "0"
+      - name: RELEASE_NAME
+        value: go-app
+      - name: CHART_PATH
+        value: k8s
+      - name: IMAGE
+        value: "$(params.imageUrl):$(params.revision)-$(tasks.misc.results.short-sha)-$(tasks.misc.results.current-ts)" 
+      - name: NAMESPACE 
+        value: go-app          
