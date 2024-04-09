@@ -45,7 +45,7 @@ spec:
   - name: RELEASE_NAME
     value: go-app
   - name: CHART_PATH
-    value: k8s
+    value: k8s/
   - name: IMAGE
     value: ""            
   - name: NAMESPACE

@@ -8,6 +8,7 @@ image:
   tag: "main-3537be4e-1712528660"
 
 imagePullSecrets: []
+
 nameOverride: ""
 fullnameOverride: ""
 
