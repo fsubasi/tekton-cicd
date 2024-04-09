@@ -11,6 +11,10 @@ spec:
   - name: sparseCheckoutDirectories
   - name: ARGS
   - name: IMAGEARGS
+  - name: RELEASE_NAME
+  - name: CHART_PATH
+  - name: IMAGE
+  - name: NAMESPACE 
   resourcetemplates:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
