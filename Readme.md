@@ -176,15 +176,19 @@ This repository showcases a sample Tekton Pipeline designed to perform the follo
 
 ## Notes
 
-1. Command to delete completed jobs.
+1. Command to delete successfully completed pods.
 
     `kubectl delete pods --field-selector=status.phase==Succeeded --namespace=your_namespace`
 
-2. Command to follow pipeline run status
+2. Command to delete failed pods.
+
+    `kubectl delete pods --field-selector=status.phase==Failed --namespace=your_namespace`
+
+3. Command to follow pipeline run status
 
     `tkn pipelinerun logs --follow --last`
 
-3. Sometimes, ngrok dns might be changed if you are using the free version. At this time, you need to update the payload url of the github webhook with the new dns here.
+4. Sometimes, ngrok dns might be changed if you are using the free version. At this time, you need to update the payload url of the github webhook with the new dns here.
    
 
     ![ngrok-url](image-1.png)

@@ -4,26 +4,15 @@ metadata:
   name: ci-cd
 spec:
   description: |
-      This is a pipeline template which performs the follwing tasks:
-      - Clones a subset of file for one microservice from a mono-repo
-        e.g. vote/* result/* worker/* matching patterns provided.
-      - Lists all the files from the cloned workspace to validate if 
-        it has cloned the correct subpath matching your microservice. 
-      - Builds a container image from the workspace which contains 
-        the Dockerfile. It accepts imageUrl and imageTag params to 
-        define the tag.  The same task also pushes the image to the 
-        registry. 
-      Some of the additional  notable features of this template include:
-      - Cloned repo is passed to subsequent Tasks using a Workspace. 
-      - Orders Tasks in a Pipeline using "runAfter" so that
-        git-clone completes before we try to read from the Workspace 
-        to find the Dockerfile and build an image.
-      - Uses a volumeClaimTemplate Volume as a Workspace.
-      - Uses a secret generated with config.json and mounts it 
-        as a worksapce with name dockerconfig to provide registry 
-        credentials. 
-      - Avoids hard-coded paths by using a Workspace's path
-        variable instead.
+      This repository showcases a sample Tekton Pipeline designed to perform the following actions:
+
+      - Fetch the repository.
+      - Compile the Go application.
+      - Run a basic unit test.
+      - Prepare an image tag.
+      - Build and push the image to the registry via Kaniko.
+      - Scan files and images with Trivy.
+      - Deploy Kubernetes manifests via Helm.
   params:
   - name: repoUrl
     type: string
