@@ -116,29 +116,15 @@ spec:
     params:
       - name: ARGS
         value:
+          - --severity HIGH,CRITICAL
           - $(params.ARGS[*])
+          - --format
+          - json         
       - name: IMAGE_PATH
         value: .
     workspaces:
       - name: manifest-dir
-        workspace: shared-data
-
-  # - name: trivy-scan-image
-  #   taskRef:
-  #     name: trivy-scanner
-  #     kind: Task
-  #   runAfter:
-  #     - img-build-publish
-  #   params:
-  #     - name: ARGS
-  #       value:
-  #         - $(params.IMAGEARGS[*])
-  #     - name: IMAGE_PATH
-  #       value: $(params.imageUrl)
-  #   workspaces:
-  #     - name: manifest-dir
-  #       workspace: shared-data
-        
+        workspace: shared-data      
            
   - name: misc
     runAfter: ["fetch-repo"]  # Wait until the clone is done before listing all files and directories cloned
@@ -211,11 +197,30 @@ spec:
     - name: IMAGE
       value: '$(params.imageUrl):$(params.revision)-$(tasks.misc.results.short-sha)-$(tasks.misc.results.current-ts)'
     - name: EXTRA_ARGS
-      value: [ "--skip-tls-verify" ]      
+      value: [ "--skip-tls-verify" ]   
+
+  - name: trivy-scan-image
+    taskRef:
+      name: trivy-scanner
+      kind: Task
+    runAfter:
+      - img-build-publish
+    params:
+      - name: ARGS
+        value:
+          - --severity HIGH,CRITICAL
+          - $(params.IMAGEARGS[*])
+          - --format
+          - json          
+      - name: IMAGE_PATH
+        value: '$(params.imageUrl):$(params.revision)-$(tasks.misc.results.short-sha)-$(tasks.misc.results.current-ts)'
+    workspaces:
+      - name: manifest-dir
+        workspace: shared-data               
 
   - name: deploy
     runAfter: 
-    - img-build-publish
+    - trivy-scan-image
     workspaces:
     - name: source
       workspace: shared-data    

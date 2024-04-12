@@ -41,7 +41,7 @@ spec:
     value:
       - image
       - --exit-code
-      - "0"
+      - "1"
   - name: RELEASE_NAME
     value: go-app
   - name: CHART_PATH
