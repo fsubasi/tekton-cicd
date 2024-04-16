@@ -64,7 +64,7 @@ This repository showcases a sample Tekton Pipeline designed to perform the follo
     tkn hub install task trivy-scanner
   ```  
   
-3. Create namespace, service account, role and rolebinding for helm deployment process.
+3. Create role and rolebinding for helm deployment process.
 
   ```bash
   kubectl apply -f - <<EOF
@@ -111,7 +111,7 @@ This repository showcases a sample Tekton Pipeline designed to perform the follo
    kubectl apply -f ./pipeline.yaml
 
    kubectl apply -f ./trigger-binding.yaml
- s
+ 
    kubectl apply -f ./trigger-template.yaml
 
    kubectl apply -f ./event-listener.yaml
@@ -171,8 +171,10 @@ This repository showcases a sample Tekton Pipeline designed to perform the follo
   ❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
 
 
+  Here we go!
 
-  ![Hello World!](image.png)
+
+  ![Hello World!](/images/image.png)
 
 ## Notes
 
@@ -191,8 +193,8 @@ This repository showcases a sample Tekton Pipeline designed to perform the follo
 4. Sometimes, ngrok dns might be changed if you are using the free version. At this time, you need to update the payload url of the github webhook with the new dns here.
    
 
-    ![ngrok-url](image-1.png)
+    ![ngrok-url](/images/image-1.png)
 
 
-    ![github-hook](image-2.png)
+    ![github-hook](images/image-2.png)
 
