@@ -1,0 +1,488 @@
+=====Required binaries are being installed!=====
+Warning: kubernetes-cli 1.29.3 is already installed and up-to-date.
+To reinstall 1.29.3, run:
+  brew reinstall kubernetes-cli
+Warning: minikube 1.32.0 is already installed and up-to-date.
+To reinstall 1.32.0, run:
+  brew reinstall minikube
+Warning: helm 3.14.4 is already installed and up-to-date.
+To reinstall 3.14.4, run:
+  brew reinstall helm
+Warning: tektoncd-cli 0.36.0 is already installed and up-to-date.
+To reinstall 0.36.0, run:
+  brew reinstall tektoncd-cli
+=====Minikube is being started!=====
+😄  [tekton] minikube v1.32.0 on Darwin 14.4.1 (arm64)
+✨  Automatically selected the docker driver. Other choices: qemu2, ssh
+📌  Using Docker Desktop driver with root privileges
+👍  Starting control plane node tekton in cluster tekton
+🚜  Pulling base image ...
+🔥  Creating docker container (CPUs=2, Memory=4096MB) ...
+🐳  Preparing Kubernetes v1.28.3 on Docker 24.0.7 ...
+    ▪ Generating certificates and keys ...
+    ▪ Booting up control plane ...
+    ▪ Configuring RBAC rules ...
+🔗  Configuring bridge CNI (Container Networking Interface) ...
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+🔎  Verifying Kubernetes components...
+🌟  Enabled addons: storage-provisioner, default-storageclass
+🏄  Done! kubectl is now configured to use "tekton" cluster and "default" namespace by default
+rolebinding.rbac.authorization.k8s.io/admin created
+namespace/go-app created
+=====docker creds are being created=====
+Enter the path to your config.json file: /Users/solvia/Documents/config.json
+secret/dockerhub-creds created
+Secret created successfully.
+=====Tekton pipeline resources are being applied=====
+namespace/tekton-pipelines created
+clusterrole.rbac.authorization.k8s.io/tekton-pipelines-controller-cluster-access created
+clusterrole.rbac.authorization.k8s.io/tekton-pipelines-controller-tenant-access created
+clusterrole.rbac.authorization.k8s.io/tekton-pipelines-webhook-cluster-access created
+clusterrole.rbac.authorization.k8s.io/tekton-events-controller-cluster-access created
+role.rbac.authorization.k8s.io/tekton-pipelines-controller created
+role.rbac.authorization.k8s.io/tekton-pipelines-webhook created
+role.rbac.authorization.k8s.io/tekton-pipelines-events-controller created
+role.rbac.authorization.k8s.io/tekton-pipelines-leader-election created
+role.rbac.authorization.k8s.io/tekton-pipelines-info created
+serviceaccount/tekton-pipelines-controller created
+serviceaccount/tekton-pipelines-webhook created
+serviceaccount/tekton-events-controller created
+clusterrolebinding.rbac.authorization.k8s.io/tekton-pipelines-controller-cluster-access created
+clusterrolebinding.rbac.authorization.k8s.io/tekton-pipelines-controller-tenant-access created
+clusterrolebinding.rbac.authorization.k8s.io/tekton-pipelines-webhook-cluster-access created
+clusterrolebinding.rbac.authorization.k8s.io/tekton-events-controller-cluster-access created
+rolebinding.rbac.authorization.k8s.io/tekton-pipelines-controller created
+rolebinding.rbac.authorization.k8s.io/tekton-pipelines-webhook created
+rolebinding.rbac.authorization.k8s.io/tekton-pipelines-controller-leaderelection created
+rolebinding.rbac.authorization.k8s.io/tekton-pipelines-webhook-leaderelection created
+rolebinding.rbac.authorization.k8s.io/tekton-pipelines-info created
+rolebinding.rbac.authorization.k8s.io/tekton-pipelines-events-controller created
+rolebinding.rbac.authorization.k8s.io/tekton-events-controller-leaderelection created
+customresourcedefinition.apiextensions.k8s.io/clustertasks.tekton.dev created
+customresourcedefinition.apiextensions.k8s.io/customruns.tekton.dev created
+customresourcedefinition.apiextensions.k8s.io/pipelines.tekton.dev created
+customresourcedefinition.apiextensions.k8s.io/pipelineruns.tekton.dev created
+customresourcedefinition.apiextensions.k8s.io/resolutionrequests.resolution.tekton.dev created
+customresourcedefinition.apiextensions.k8s.io/stepactions.tekton.dev created
+customresourcedefinition.apiextensions.k8s.io/tasks.tekton.dev created
+customresourcedefinition.apiextensions.k8s.io/taskruns.tekton.dev created
+customresourcedefinition.apiextensions.k8s.io/verificationpolicies.tekton.dev created
+secret/webhook-certs created
+validatingwebhookconfiguration.admissionregistration.k8s.io/validation.webhook.pipeline.tekton.dev created
+mutatingwebhookconfiguration.admissionregistration.k8s.io/webhook.pipeline.tekton.dev created
+validatingwebhookconfiguration.admissionregistration.k8s.io/config.webhook.pipeline.tekton.dev created
+clusterrole.rbac.authorization.k8s.io/tekton-aggregate-edit created
+clusterrole.rbac.authorization.k8s.io/tekton-aggregate-view created
+configmap/config-defaults created
+configmap/config-events created
+configmap/feature-flags created
+configmap/pipelines-info created
+configmap/config-leader-election-controller created
+configmap/config-leader-election-events created
+configmap/config-leader-election-webhook created
+configmap/config-logging created
+configmap/config-observability created
+configmap/config-registry-cert created
+configmap/config-spire created
+configmap/config-tracing created
+deployment.apps/tekton-pipelines-controller created
+service/tekton-pipelines-controller created
+deployment.apps/tekton-events-controller created
+service/tekton-events-controller created
+namespace/tekton-pipelines-resolvers created
+clusterrole.rbac.authorization.k8s.io/tekton-pipelines-resolvers-resolution-request-updates created
+role.rbac.authorization.k8s.io/tekton-pipelines-resolvers-namespace-rbac created
+serviceaccount/tekton-pipelines-resolvers created
+clusterrolebinding.rbac.authorization.k8s.io/tekton-pipelines-resolvers created
+rolebinding.rbac.authorization.k8s.io/tekton-pipelines-resolvers-namespace-rbac created
+configmap/bundleresolver-config created
+configmap/cluster-resolver-config created
+configmap/resolvers-feature-flags created
+configmap/config-leader-election-resolvers created
+configmap/config-logging created
+configmap/config-observability created
+configmap/git-resolver-config created
+configmap/http-resolver-config created
+configmap/hubresolver-config created
+deployment.apps/tekton-pipelines-remote-resolvers created
+service/tekton-pipelines-remote-resolvers created
+horizontalpodautoscaler.autoscaling/tekton-pipelines-webhook created
+deployment.apps/tekton-pipelines-webhook created
+service/tekton-pipelines-webhook created
+Waiting for all pods in tekton-pipelines namespace to be ready...
+Not all pods are ready yet. Waiting...
+Not all pods are ready yet. Waiting...
+Not all pods are ready yet. Waiting...
+Not all pods are ready yet. Waiting...
+All pods are ready. Proceeding with installing tasks!
+Task git-clone(0.9) installed in default namespace
+Task golang-build(0.3) installed in default namespace
+Task golang-test(0.2) installed in default namespace
+Task kaniko(0.6) installed in default namespace
+Task trivy-scanner(0.2) installed in default namespace
+=====role and rolebindings are being applied for helm deployment=====
+role.rbac.authorization.k8s.io/helm-deploy-role created
+rolebinding.rbac.authorization.k8s.io/helm-deploy-role-binding created
+=====The repository is being cloned=====
+=====Cloning the repository if it doesn't exist=====
+The repository directory 'tekton-cicd' already exists and is not an empty directory.
+=====tekton resources are being applied=====
+task.tekton.dev/helm-upgrade created
+pipeline.tekton.dev/ci-cd created
+====The process has been completed, running the first pipeline!=====
+pipelinerun.tekton.dev/ci-cd-sxrhl created
+[fetch-repo : clone] + '[' false '=' true ]
+[fetch-repo : clone] + '[' false '=' true ]
+[fetch-repo : clone] + '[' false '=' true ]
+[fetch-repo : clone] + CHECKOUT_DIR=/workspace/output/
+[fetch-repo : clone] + '[' true '=' true ]
+[fetch-repo : clone] + cleandir
+[fetch-repo : clone] + '[' -d /workspace/output/ ]
+[fetch-repo : clone] + rm -rf '/workspace/output//*'
+[fetch-repo : clone] + rm -rf '/workspace/output//.[!.]*'
+[fetch-repo : clone] + rm -rf '/workspace/output//..?*'
+[fetch-repo : clone] + test -z
+[fetch-repo : clone] + test -z
+[fetch-repo : clone] + test -z
+[fetch-repo : clone] + git config --global --add safe.directory /workspace/output
+[fetch-repo : clone] + /ko-app/git-init '-url=https://github.com/fsubasi/tekton-cicd.git' '-revision=main' '-refspec=' '-path=/workspace/output/' '-sslVerify=true' '-submodules=true' '-depth=1' '-sparseCheckoutDirectories='
+[fetch-repo : clone] {"level":"info","ts":1713302977.4513257,"caller":"git/git.go:176","msg":"Successfully cloned https://github.com/fsubasi/tekton-cicd.git @ e52dbbe0edb5249fc9c1b6438505b9211f9a9cba (grafted, HEAD, origin/main) in path /workspace/output/"}
+[fetch-repo : clone] {"level":"info","ts":1713302977.4953496,"caller":"git/git.go:215","msg":"Successfully initialized and updated submodules in path /workspace/output/"}
+[fetch-repo : clone] + cd /workspace/output/
+[fetch-repo : clone] + git rev-parse HEAD
+[fetch-repo : clone] + RESULT_SHA=e52dbbe0edb5249fc9c1b6438505b9211f9a9cba
+[fetch-repo : clone] + EXIT_CODE=0
+[fetch-repo : clone] + '[' 0 '!=' 0 ]
+[fetch-repo : clone] + git log -1 '--pretty=%ct'
+[fetch-repo : clone] + RESULT_COMMITTER_DATE=1713273142
+[fetch-repo : clone] + printf '%s' 1713273142
+[fetch-repo : clone] + printf '%s' e52dbbe0edb5249fc9c1b6438505b9211f9a9cba
+[fetch-repo : clone] + printf '%s' https://github.com/fsubasi/tekton-cicd.git
+
+[run-build : build] internal/goarch
+[run-build : build] internal/unsafeheader
+[run-build : build] internal/cpu
+[run-build : build] internal/coverage/rtcov
+[run-build : build] internal/abi
+[run-build : build] internal/chacha8rand
+[run-build : build] internal/godebugs
+[run-build : build] internal/goexperiment
+[run-build : build] internal/goos
+[run-build : build] internal/bytealg
+[run-build : build] runtime/internal/atomic
+[run-build : build] runtime/internal/math
+[run-build : build] runtime/internal/sys
+[run-build : build] runtime/internal/syscall
+[run-build : build] internal/itoa
+[run-build : build] math/bits
+[run-build : build] unicode/utf8
+[run-build : build] math
+[run-build : build] internal/race
+[run-build : build] sync/atomic
+[run-build : build] unicode
+[run-build : build] runtime
+[run-build : build] cmp
+[run-build : build] slices
+[run-build : build] container/list
+[run-build : build] crypto/internal/alias
+[run-build : build] crypto/subtle
+[run-build : build] crypto/internal/boring/sig
+[run-build : build] unicode/utf16
+[run-build : build] vendor/golang.org/x/crypto/cryptobyte/asn1
+[run-build : build] internal/nettrace
+[run-build : build] vendor/golang.org/x/crypto/internal/alias
+[run-build : build] log/internal
+[run-build : build] internal/reflectlite
+[run-build : build] sync
+[run-build : build] internal/testlog
+[run-build : build] internal/singleflight
+[run-build : build] internal/bisect
+[run-build : build] errors
+[run-build : build] sort
+[run-build : build] internal/godebug
+[run-build : build] io
+[run-build : build] strconv
+[run-build : build] internal/oserror
+[run-build : build] syscall
+[run-build : build] internal/safefilepath
+[run-build : build] path
+[run-build : build] bytes
+[run-build : build] strings
+[run-build : build] reflect
+[run-build : build] hash
+[run-build : build] hash/crc32
+[run-build : build] bufio
+[run-build : build] crypto
+[run-build : build] crypto/internal/randutil
+[run-build : build] math/rand
+[run-build : build] internal/syscall/unix
+[run-build : build] time
+[run-build : build] internal/syscall/execenv
+[run-build : build] crypto/internal/nistec/fiat
+[run-build : build] crypto/rc4
+[run-build : build] vendor/golang.org/x/net/dns/dnsmessage
+[run-build : build] internal/fmtsort
+[run-build : build] encoding/binary
+[run-build : build] internal/intern
+[run-build : build] internal/poll
+[run-build : build] io/fs
+[run-build : build] context
+[run-build : build] crypto/cipher
+[run-build : build] crypto/internal/edwards25519/field
+[run-build : build] embed
+[run-build : build] os
+[run-build : build] crypto/internal/nistec
+[run-build : build] crypto/internal/boring
+[run-build : build] crypto/des
+[run-build : build] crypto/aes
+[run-build : build] crypto/sha512
+[run-build : build] crypto/internal/edwards25519
+[run-build : build] crypto/ecdh
+[run-build : build] crypto/hmac
+[run-build : build] fmt
+[run-build : build] crypto/md5
+[run-build : build] crypto/sha1
+[run-build : build] crypto/sha256
+[run-build : build] encoding/base64
+[run-build : build] net/netip
+[run-build : build] encoding/pem
+[run-build : build] compress/flate
+[run-build : build] math/big
+[run-build : build] encoding/hex
+[run-build : build] net/url
+[run-build : build] net
+[run-build : build] compress/gzip
+[run-build : build] path/filepath
+[run-build : build] vendor/golang.org/x/crypto/chacha20
+[run-build : build] vendor/golang.org/x/crypto/internal/poly1305
+[run-build : build] vendor/golang.org/x/sys/cpu
+[run-build : build] vendor/golang.org/x/crypto/hkdf
+[run-build : build] crypto/rand
+[run-build : build] crypto/elliptic
+[run-build : build] crypto/internal/bigmod
+[run-build : build] crypto/internal/boring/bbig
+[run-build : build] encoding/asn1
+[run-build : build] crypto/ed25519
+[run-build : build] crypto/rsa
+[run-build : build] crypto/dsa
+[run-build : build] vendor/golang.org/x/crypto/chacha20poly1305
+[run-build : build] vendor/golang.org/x/crypto/cryptobyte
+[run-build : build] crypto/x509/pkix
+[run-build : build] vendor/golang.org/x/text/transform
+[run-build : build] log
+[run-build : build] crypto/ecdsa
+[run-build : build] vendor/golang.org/x/text/unicode/norm
+[run-build : build] vendor/golang.org/x/text/unicode/bidi
+[run-build : build] net/textproto
+[run-build : build] crypto/x509
+[run-build : build] vendor/golang.org/x/net/http2/hpack
+[run-build : build] vendor/golang.org/x/text/secure/bidirule
+[run-build : build] mime
+[run-build : build] mime/quotedprintable
+[run-build : build] vendor/golang.org/x/net/idna
+[run-build : build] net/http/internal
+[run-build : build] net/http/internal/ascii
+[run-build : build] mime/multipart
+[run-build : build] vendor/golang.org/x/net/http/httpguts
+[run-build : build] vendor/golang.org/x/net/http/httpproxy
+[run-build : build] crypto/tls
+[run-build : build] net/http/httptrace
+[run-build : build] net/http
+[run-build : build] _/go/src
+
+[trivy-scan-local-fs : trivy-scan] Running trivy task with command below
+[trivy-scan-local-fs : trivy-scan] trivy --severity HIGH,CRITICAL fs --exit-code 1 --format json .
+[trivy-scan-local-fs : trivy-scan] 2024-04-16T21:32:12.278Z	INFO	Need to update DB
+[trivy-scan-local-fs : trivy-scan] 2024-04-16T21:32:12.278Z	INFO	DB Repository: ghcr.io/aquasecurity/trivy-db
+[trivy-scan-local-fs : trivy-scan] 2024-04-16T21:32:12.278Z	INFO	Downloading DB...
+[misc : unnamed-0] /workspace/source/:
+[misc : unnamed-0] Dockerfile
+[misc : unnamed-0] Readme.md
+[misc : unnamed-0] creds
+[misc : unnamed-0] images
+[misc : unnamed-0] k8s
+[misc : unnamed-0] main.go
+[misc : unnamed-0] main_test.go
+[misc : unnamed-0] tekton
+[misc : unnamed-0]
+[misc : unnamed-0] /workspace/source/creds:
+[misc : unnamed-0] dockerhub-creds-secret.yaml
+[misc : unnamed-0]
+[misc : unnamed-0] /workspace/source/images:
+[misc : unnamed-0] image-1.png
+[misc : unnamed-0] image-2.png
+[misc : unnamed-0] image.png
+[misc : unnamed-0]
+[misc : unnamed-0] /workspace/source/k8s:
+[misc : unnamed-0] Chart.yaml
+[misc : unnamed-0] templates
+[misc : unnamed-0] values.yaml
+[misc : unnamed-0]
+[misc : unnamed-0] /workspace/source/k8s/templates:
+[misc : unnamed-0] deployment.yaml
+[misc : unnamed-0] service.yaml
+[misc : unnamed-0]
+[misc : unnamed-0] /workspace/source/tekton:
+[misc : unnamed-0] event-listener.yaml
+[misc : unnamed-0] helm-upgrade.yaml
+[misc : unnamed-0] pipeline.yaml
+[misc : unnamed-0] pipelinerun.yaml
+[misc : unnamed-0] rbac-for-trigger
+[misc : unnamed-0] trigger-binding.yaml
+[misc : unnamed-0] trigger-template.yaml
+[misc : unnamed-0]
+[misc : unnamed-0] /workspace/source/tekton/rbac-for-trigger:
+[misc : unnamed-0] rbac.yaml
+
+[misc : print-date-unix-timestamp] 1713303142
+
+[misc : shorten-commit-hash] e52dbbe0
+
+[trivy-scan-local-fs : trivy-scan] 96.86 KiB / 45.05 MiB [>_____________________________________________________________] 0.21% ? p/s ?448.86 KiB / 45.05 MiB [>____________________________________________________________] 0.97% ? p/s ?576.86 KiB / 45.05 MiB [>____________________________________________________________] 1.25% ? p/s ?656.86 KiB / 45.05 MiB [>_____________________________________________] 1.42% 932.74 KiB p/s ETA 48s768.86 KiB / 45.05 MiB [>_____________________________________________] 1.67% 932.74 KiB p/s ETA 48s800.86 KiB / 45.05 MiB [>_____________________________________________] 1.74% 932.74 KiB p/s ETA 48s848.86 KiB / 45.05 MiB [>_____________________________________________] 1.84% 893.24 KiB p/s ETA 50s896.86 KiB / 45.05 MiB [>_____________________________________________] 1.94% 893.24 KiB p/s ETA 50s912.86 KiB / 45.05 MiB [>_____________________________________________] 1.98% 893.24 KiB p/s ETA 50s960.86 KiB / 45.05 MiB [>_____________________________________________] 2.08% 847.65 KiB p/s ETA 53s976.86 KiB / 45.05 MiB [>_____________________________________________] 2.12% 847.65 KiB p/s ETA 53s1.00 MiB / 45.05 MiB [->______________________________________________] 2.22% 847.65 KiB p/s ETA 53s1.06 MiB / 45.05 MiB [->______________________________________________] 2.36% 806.72 KiB p/s ETA 55s1.13 MiB / 45.05 MiB [->______________________________________________] 2.50% 806.72 KiB p/s ETA 55s1.22 MiB / 45.05 MiB [->______________________________________________] 2.71% 806.72 KiB p/s ETA 55s1.33 MiB / 45.05 MiB [->______________________________________________] 2.95% 783.90 KiB p/s ETA 57s1.47 MiB / 45.05 MiB [->______________________________________________] 3.26% 783.90 KiB p/s ETA 56s1.63 MiB / 45.05 MiB [->______________________________________________] 3.61% 783.90 KiB p/s ETA 56s1.77 MiB / 45.05 MiB [->______________________________________________] 3.92% 781.51 KiB p/s ETA 56s1.95 MiB / 45.05 MiB [-->_____________________________________________] 4.34% 781.51 KiB p/s ETA 56s2.16 MiB / 45.05 MiB [-->_____________________________________________] 4.79% 781.51 KiB p/s ETA 56s2.33 MiB / 45.05 MiB [-->_____________________________________________] 5.17% 793.12 KiB p/s ETA 55s2.56 MiB / 45.05 MiB [-->_____________________________________________] 5.69% 793.12 KiB p/s ETA 54s2.75 MiB / 45.05 MiB [-->_____________________________________________] 6.11% 793.12 KiB p/s ETA 54s2.97 MiB / 45.05 MiB [--->____________________________________________] 6.59% 812.39 KiB p/s ETA 53s3.25 MiB / 45.05 MiB [--->____________________________________________] 7.22% 812.39 KiB p/s ETA 52s3.56 MiB / 45.05 MiB [--->____________________________________________] 7.91% 812.39 KiB p/s ETA 52s3.88 MiB / 45.05 MiB [---->___________________________________________] 8.60% 859.74 KiB p/s ETA 49s4.22 MiB / 45.05 MiB [---->___________________________________________] 9.37% 859.74 KiB p/s ETA 48s4.59 MiB / 45.05 MiB [---->__________________________________________] 10.20% 859.74 KiB p/s ETA 48s5.00 MiB / 45.05 MiB [----->_________________________________________] 11.10% 928.15 KiB p/s ETA 44s5.38 MiB / 45.05 MiB [----->_________________________________________] 11.93% 928.15 KiB p/s ETA 43s5.81 MiB / 45.05 MiB [------>________________________________________] 12.91% 928.15 KiB p/s ETA 43s6.28 MiB / 45.05 MiB [------>_______________________________________] 13.95% 1009.29 KiB p/s ETA 39s6.69 MiB / 45.05 MiB [------>_______________________________________] 14.85% 1009.29 KiB p/s ETA 38s7.16 MiB / 45.05 MiB [------->______________________________________] 15.89% 1009.29 KiB p/s ETA 38s7.72 MiB / 45.05 MiB [-------->________________________________________] 17.14% 1.08 MiB p/s ETA 34s8.22 MiB / 45.05 MiB [-------->________________________________________] 18.25% 1.08 MiB p/s ETA 34s8.75 MiB / 45.05 MiB [--------->_______________________________________] 19.43% 1.08 MiB p/s ETA 33s9.31 MiB / 45.05 MiB [---------->______________________________________] 20.67% 1.18 MiB p/s ETA 30s9.81 MiB / 45.05 MiB [---------->______________________________________] 21.78% 1.18 MiB p/s ETA
+[trivy-scan-local-fs : trivy-scan]  29s10.38 MiB / 45.05 MiB [----------->____________________________________] 23.03% 1.18 MiB p/s ETA 29s10.94 MiB / 45.05 MiB [----------->____________________________________] 24.28% 1.28 MiB p/s ETA 26s11.50 MiB / 45.05 MiB [------------>___________________________________] 25.53% 1.28 MiB p/s ETA 26s12.06 MiB / 45.05 MiB [------------>___________________________________] 26.78% 1.28 MiB p/s ETA 25s12.58 MiB / 45.05 MiB [------------->__________________________________] 27.92% 1.37 MiB p/s ETA 23s13.13 MiB / 45.05 MiB [------------->__________________________________] 29.14% 1.37 MiB p/s ETA 23s13.66 MiB / 45.05 MiB [-------------->_________________________________] 30.32% 1.37 MiB p/s ETA 22s14.13 MiB / 45.05 MiB [--------------->________________________________] 31.36% 1.45 MiB p/s ETA 21s14.69 MiB / 45.05 MiB [--------------->________________________________] 32.61% 1.45 MiB p/s ETA 20s15.22 MiB / 45.05 MiB [---------------->_______________________________] 33.79% 1.45 MiB p/s ETA 20s15.94 MiB / 45.05 MiB [---------------->_______________________________] 35.38% 1.53 MiB p/s ETA 18s16.38 MiB / 45.05 MiB [----------------->______________________________] 36.35% 1.53 MiB p/s ETA 18s16.97 MiB / 45.05 MiB [------------------>_____________________________] 37.67% 1.53 MiB p/s ETA 18s17.50 MiB / 45.05 MiB [------------------>_____________________________] 38.85% 1.62 MiB p/s ETA 16s18.08 MiB / 45.05 MiB [------------------->____________________________] 40.13% 1.62 MiB p/s ETA 16s18.66 MiB / 45.05 MiB [------------------->____________________________] 41.42% 1.62 MiB p/s ETA 16s19.25 MiB / 45.05 MiB [-------------------->___________________________] 42.74% 1.70 MiB p/s ETA 15s19.83 MiB / 45.05 MiB [--------------------->__________________________] 44.02% 1.70 MiB p/s ETA 14s20.39 MiB / 45.05 MiB [--------------------->__________________________] 45.27% 1.70 MiB p/s ETA 14s20.95 MiB / 45.05 MiB [---------------------->_________________________] 46.52% 1.78 MiB p/s ETA 13s21.56 MiB / 45.05 MiB [---------------------->_________________________] 47.87% 1.78 MiB p/s ETA 13s22.13 MiB / 45.05 MiB [----------------------->________________________] 49.12% 1.78 MiB p/s ETA 12s22.69 MiB / 45.05 MiB [------------------------>_______________________] 50.37% 1.85 MiB p/s ETA 12s23.19 MiB / 45.05 MiB [------------------------>_______________________] 51.48% 1.85 MiB p/s ETA 11s23.75 MiB / 45.05 MiB [------------------------->______________________] 52.73% 1.85 MiB p/s ETA 11s24.25 MiB / 45.05 MiB [------------------------->______________________] 53.84% 1.90 MiB p/s ETA 10s24.72 MiB / 45.05 MiB [-------------------------->_____________________] 54.88% 1.90 MiB p/s ETA 10s25.22 MiB / 45.05 MiB [-------------------------->_____________________] 55.99% 1.90 MiB p/s ETA 10s25.78 MiB / 45.05 MiB [---------------------------->____________________] 57.23% 1.94 MiB p/s ETA 9s26.33 MiB / 45.05 MiB [---------------------------->____________________] 58.45% 1.94 MiB p/s ETA 9s26.89 MiB / 45.05 MiB [----------------------------->___________________] 59.70% 1.94 MiB p/s ETA 9s27.47 MiB / 45.05 MiB [----------------------------->___________________] 60.98% 2.00 MiB p/s ETA 8s28.02 MiB / 45.05 MiB [------------------------------>__________________] 62.19% 2.00 MiB p/s ETA 8s28.56 MiB / 45.05 MiB [------------------------------->_________________] 63.41% 2.00 MiB p/s ETA 8s29.13 MiB / 45.05 MiB [------------------------------->_________________] 64.66% 2.05 MiB p/s ETA 7s29.69 MiB / 45.05 MiB [-------------------------------->________________] 65.91% 2.05 MiB p/s ETA 7s30.20 MiB / 45.05 MiB [-------------------------------->________________] 67.05% 2.05 MiB p/s ETA 7s30.81 MiB / 45.05 MiB [--------------------------------->_______________] 68.40% 2.10 MiB p/s ETA 6s31.36 MiB / 45.05 MiB [---------------------------------->______________] 69.61% 2.10 MiB p/s ETA 6s31.94 MiB / 45.05 MiB [---------------------------------->______________] 70.89% 2.10 MiB p/s ETA 6s32.54 MiB / 45.05 MiB [----------------------------------->_____________] 72.25% 2.15 MiB p/
+[trivy-scan-local-fs : trivy-scan] s ETA 5s33.11 MiB / 45.05 MiB [------------------------------------>____________] 73.49% 2.15 MiB p/s ETA 5s33.69 MiB / 45.05 MiB [------------------------------------>____________] 74.78% 2.15 MiB p/s ETA 5s34.26 MiB / 45.05 MiB [------------------------------------->___________] 76.06% 2.19 MiB p/s ETA 4s34.86 MiB / 45.05 MiB [------------------------------------->___________] 77.38% 2.19 MiB p/s ETA 4s35.44 MiB / 45.05 MiB [-------------------------------------->__________] 78.66% 2.19 MiB p/s ETA 4s36.01 MiB / 45.05 MiB [--------------------------------------->_________] 79.95% 2.24 MiB p/s ETA 4s36.58 MiB / 45.05 MiB [--------------------------------------->_________] 81.20% 2.24 MiB p/s ETA 3s37.17 MiB / 45.05 MiB [---------------------------------------->________] 82.51% 2.24 MiB p/s ETA 3s37.70 MiB / 45.05 MiB [----------------------------------------->_______] 83.69% 2.28 MiB p/s ETA 3s38.29 MiB / 45.05 MiB [----------------------------------------->_______] 85.01% 2.28 MiB p/s ETA 2s38.83 MiB / 45.05 MiB [------------------------------------------>______] 86.19% 2.28 MiB p/s ETA 2s39.42 MiB / 45.05 MiB [------------------------------------------>______] 87.51% 2.31 MiB p/s ETA 2s39.98 MiB / 45.05 MiB [------------------------------------------->_____] 88.76% 2.31 MiB p/s ETA 2s40.56 MiB / 45.05 MiB [-------------------------------------------->____] 90.04% 2.31 MiB p/s ETA 1s41.11 MiB / 45.05 MiB [-------------------------------------------->____] 91.25% 2.35 MiB p/s ETA 1s41.69 MiB / 45.05 MiB [--------------------------------------------->___] 92.54% 2.35 MiB p/s ETA 1s42.26 MiB / 45.05 MiB [--------------------------------------------->___] 93.82% 2.35 MiB p/s ETA 1s42.86 MiB / 45.05 MiB [---------------------------------------------->__] 95.14% 2.38 MiB p/s ETA 0s43.29 MiB / 45.05 MiB [----------------------------------------------->_] 96.11% 2.38 MiB p/s ETA 0s43.86 MiB / 45.05 MiB [----------------------------------------------->_] 97.36% 2.38 MiB p/s ETA 0s44.45 MiB / 45.05 MiB [------------------------------------------------>] 98.68% 2.40 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.40 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.40 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.31 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.31 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.31 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.16 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.16 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.16 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.02 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.02 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.02 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 1.89 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 1.89 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 1.89 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 1.77 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 1.77 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [---------------------------------------------------] 100.00% 1.91 MiB p/s 24s2024-04-16T21:32:37.207Z	INFO	Vulnerability scanning is enabled
+[trivy-scan-local-fs : trivy-scan] 2024-04-16T21:32:37.208Z	INFO	Secret scanning is enabled
+[trivy-scan-local-fs : trivy-scan] 2024-04-16T21:32:37.208Z	INFO	If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+[trivy-scan-local-fs : trivy-scan] 2024-04-16T21:32:37.209Z	INFO	Please see also https://aquasecurity.github.io/trivy/v0.43/docs/scanner/secret/#recommendation for faster secret detection
+[trivy-scan-local-fs : trivy-scan] 2024-04-16T21:32:37.352Z	INFO	Number of language-specific files: 0
+[trivy-scan-local-fs : trivy-scan] {
+[trivy-scan-local-fs : trivy-scan]   "SchemaVersion": 2,
+[trivy-scan-local-fs : trivy-scan]   "ArtifactName": ".",
+[trivy-scan-local-fs : trivy-scan]   "ArtifactType": "filesystem",
+[trivy-scan-local-fs : trivy-scan]   "Metadata": {
+[trivy-scan-local-fs : trivy-scan]     "ImageConfig": {
+[trivy-scan-local-fs : trivy-scan]       "architecture": "",
+[trivy-scan-local-fs : trivy-scan]       "created": "0001-01-01T00:00:00Z",
+[trivy-scan-local-fs : trivy-scan]       "os": "",
+[trivy-scan-local-fs : trivy-scan]       "rootfs": {
+[trivy-scan-local-fs : trivy-scan]         "type": "",
+[trivy-scan-local-fs : trivy-scan]         "diff_ids": null
+[trivy-scan-local-fs : trivy-scan]       },
+[trivy-scan-local-fs : trivy-scan]       "config": {}
+[trivy-scan-local-fs : trivy-scan]     }
+[trivy-scan-local-fs : trivy-scan]   }
+[trivy-scan-local-fs : trivy-scan] }
+[run-test : unit-test] === RUN   TestNothing
+[run-test : unit-test]     main_test.go:6: wooo!
+[run-test : unit-test] --- PASS: TestNothing (0.00s)
+[run-test : unit-test] PASS
+[run-test : unit-test] coverage: 0.0% of statements
+
+[run-test : unit-test] ok  	_/go/src	0.669s	coverage: 0.0% of statements
+
+[img-build-publish : build-and-push] INFO[0001] Resolved base name golang:1.14.2-alpine to build
+[img-build-publish : build-and-push] INFO[0001] Retrieving image manifest golang:1.14.2-alpine
+[img-build-publish : build-and-push] INFO[0001] Retrieving image golang:1.14.2-alpine from registry index.docker.io
+[img-build-publish : build-and-push] INFO[0003] No base image, nothing to extract
+[img-build-publish : build-and-push] INFO[0003] Built cross stage deps: map[0:[/go/app]]
+[img-build-publish : build-and-push] INFO[0003] Retrieving image manifest golang:1.14.2-alpine
+[img-build-publish : build-and-push] INFO[0003] Returning cached image manifest
+[img-build-publish : build-and-push] INFO[0003] Executing 0 build triggers
+[img-build-publish : build-and-push] INFO[0003] Unpacking rootfs as cmd COPY main.go . requires it.
+[img-build-publish : build-and-push] INFO[0049] COPY main.go .
+[img-build-publish : build-and-push] INFO[0049] Taking snapshot of files...
+[img-build-publish : build-and-push] INFO[0049] RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+[img-build-publish : build-and-push] INFO[0049] Taking snapshot of full filesystem...
+[img-build-publish : build-and-push] INFO[0051] cmd: /bin/sh
+[img-build-publish : build-and-push] INFO[0051] args: [-c CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .]
+[img-build-publish : build-and-push] INFO[0051] Running: [/bin/sh -c CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .]
+[img-build-publish : build-and-push] INFO[0057] Taking snapshot of full filesystem...
+[img-build-publish : build-and-push] INFO[0058] Saving file go/app for later use
+[img-build-publish : build-and-push] INFO[0058] Deleting filesystem...
+[img-build-publish : build-and-push] INFO[0059] No base image, nothing to extract
+[img-build-publish : build-and-push] INFO[0059] Executing 0 build triggers
+[img-build-publish : build-and-push] INFO[0059] Unpacking rootfs as cmd COPY --from=build /go/app /bin/ requires it.
+[img-build-publish : build-and-push] INFO[0059] COPY --from=build /go/app /bin/
+[img-build-publish : build-and-push] INFO[0059] Taking snapshot of files...
+[img-build-publish : build-and-push] INFO[0059] EXPOSE 8080
+[img-build-publish : build-and-push] INFO[0059] cmd: EXPOSE
+[img-build-publish : build-and-push] INFO[0059] Adding exposed port: 8080/tcp
+[img-build-publish : build-and-push] INFO[0059] CMD ["app"]
+[img-build-publish : build-and-push] INFO[0059] Pushing image to fsubasi/tekton:main-e52dbbe0-1713303142
+[img-build-publish : build-and-push] INFO[0074] Pushed image to 1 destinations
+
+[img-build-publish : write-url] fsubasi/tekton:main-e52dbbe0-1713303142
+
+[trivy-scan-image : trivy-scan] Running trivy task with command below
+[trivy-scan-image : trivy-scan] trivy --severity HIGH,CRITICAL image --exit-code 1 --format json fsubasi/tekton:main-e52dbbe0-1713303142
+[trivy-scan-image : trivy-scan] 2024-04-16T21:34:26.966Z	INFO	Need to update DB
+[trivy-scan-image : trivy-scan] 2024-04-16T21:34:26.966Z	INFO	DB Repository: ghcr.io/aquasecurity/trivy-db
+[trivy-scan-image : trivy-scan] 2024-04-16T21:34:26.966Z	INFO	Downloading DB...
+[trivy-scan-image : trivy-scan] 448.00 KiB / 45.05 MiB [>____________________________________________________________] 0.97% ? p/s ?960.00 KiB / 45.05 MiB [->___________________________________________________________] 2.08% ? p/s ?1.50 MiB / 45.05 MiB [-->____________________________________________________________] 3.33% ? p/s ?2.06 MiB / 45.05 MiB [-->_______________________________________________] 4.58% 2.71 MiB p/s ETA 15s2.56 MiB / 45.05 MiB [-->_______________________________________________] 5.69% 2.71 MiB p/s ETA 15s3.14 MiB / 45.05 MiB [--->______________________________________________] 6.97% 2.71 MiB p/s ETA 15s3.72 MiB / 45.05 MiB [---->_____________________________________________] 8.26% 2.71 MiB p/s ETA 15s4.31 MiB / 45.05 MiB [---->_____________________________________________] 9.57% 2.71 MiB p/s ETA 15s4.88 MiB / 45.05 MiB [----->___________________________________________] 10.82% 2.71 MiB p/s ETA 14s5.31 MiB / 45.05 MiB [----->___________________________________________] 11.79% 2.71 MiB p/s ETA 14s6.00 MiB / 45.05 MiB [------>__________________________________________] 13.32% 2.71 MiB p/s ETA 14s6.56 MiB / 45.05 MiB [------->_________________________________________] 14.57% 2.71 MiB p/s ETA 14s7.06 MiB / 45.05 MiB [------->_________________________________________] 15.68% 2.72 MiB p/s ETA 13s7.62 MiB / 45.05 MiB [-------->________________________________________] 16.93% 2.72 MiB p/s ETA 13s8.12 MiB / 45.05 MiB [-------->________________________________________] 18.04% 2.72 MiB p/s ETA 13s8.59 MiB / 45.05 MiB [--------->_______________________________________] 19.08% 2.71 MiB p/s ETA 13s9.19 MiB / 45.05 MiB [--------->_______________________________________] 20.40% 2.71 MiB p/s ETA 13s9.77 MiB / 45.05 MiB [---------->______________________________________] 21.68% 2.71 MiB p/s ETA 13s10.31 MiB / 45.05 MiB [---------->_____________________________________] 22.89% 2.72 MiB p/s ETA 12s10.88 MiB / 45.05 MiB [----------->____________________________________] 24.14% 2.72 MiB p/s ETA 12s11.44 MiB / 45.05 MiB [------------>___________________________________] 25.39% 2.72 MiB p/s ETA 12s12.00 MiB / 45.05 MiB [------------>___________________________________] 26.64% 2.73 MiB p/s ETA 12s12.50 MiB / 45.05 MiB [------------->__________________________________] 27.75% 2.73 MiB p/s ETA 11s13.08 MiB / 45.05 MiB [------------->__________________________________] 29.03% 2.73 MiB p/s ETA 11s13.66 MiB / 45.05 MiB [-------------->_________________________________] 30.32% 2.73 MiB p/s ETA 11s14.22 MiB / 45.05 MiB [--------------->________________________________] 31.56% 2.73 MiB p/s ETA 11s14.62 MiB / 45.05 MiB [--------------->________________________________] 32.47% 2.73 MiB p/s ETA 11s15.19 MiB / 45.05 MiB [---------------->_______________________________] 33.72% 2.72 MiB p/s ETA 10s15.75 MiB / 45.05 MiB [---------------->_______________________________] 34.96% 2.72 MiB p/s ETA 10s16.31 MiB / 45.05 MiB [----------------->______________________________] 36.21% 2.72 MiB p/s ETA 10s16.89 MiB / 45.05 MiB [----------------->______________________________] 37.50% 2.73 MiB p/s ETA 10s17.45 MiB / 45.05 MiB [------------------>_____________________________] 38.74% 2.73 MiB p/s ETA 10s17.97 MiB / 45.05 MiB [------------------->_____________________________] 39.89% 2.73 MiB p/s ETA 9s18.56 MiB / 45.05 MiB [-------------------->____________________________] 41.21% 2.73 MiB p/s ETA 9s19.08 MiB / 45.05 MiB [-------------------->____________________________] 42.35% 2.73 MiB p/s ETA 9s19.66 MiB / 45.05 MiB [--------------------->___________________________] 43.64% 2.73 MiB p/s ETA 9s20.25 MiB / 45.05 MiB [---------------------->__________________________] 44.95% 2.73 MiB p/s ETA 9s20.75 MiB / 45.05 MiB [---------------------->__________________________] 46.06% 2.73 MiB p/s ETA 8s21.27 MiB / 45.05 MiB [----------------------->_________________________] 47.21% 2.73 MiB p/s ETA 8s21.81 MiB / 45.05 MiB [----------------------->_________________________] 48.42% 2.73 MiB p/s ETA 8s22.39 MiB / 45.05 MiB [------------------------>________________________] 49.71% 2.73 MiB p/s ET
+[trivy-scan-image : trivy-scan] A 8s22.84 MiB / 45.05 MiB [------------------------>________________________] 50.71% 2.73 MiB p/s ETA 8s23.41 MiB / 45.05 MiB [------------------------->_______________________] 51.96% 2.72 MiB p/s ETA 7s24.00 MiB / 45.05 MiB [-------------------------->______________________] 53.28% 2.72 MiB p/s ETA 7s24.56 MiB / 45.05 MiB [-------------------------->______________________] 54.53% 2.72 MiB p/s ETA 7s25.12 MiB / 45.05 MiB [--------------------------->_____________________] 55.78% 2.73 MiB p/s ETA 7s25.69 MiB / 45.05 MiB [--------------------------->_____________________] 57.02% 2.73 MiB p/s ETA 7s26.28 MiB / 45.05 MiB [---------------------------->____________________] 58.34% 2.73 MiB p/s ETA 6s26.83 MiB / 45.05 MiB [----------------------------->___________________] 59.56% 2.74 MiB p/s ETA 6s27.41 MiB / 45.05 MiB [----------------------------->___________________] 60.84% 2.74 MiB p/s ETA 6s28.00 MiB / 45.05 MiB [------------------------------>__________________] 62.16% 2.74 MiB p/s ETA 6s28.52 MiB / 45.05 MiB [------------------------------->_________________] 63.30% 2.74 MiB p/s ETA 6s29.03 MiB / 45.05 MiB [------------------------------->_________________] 64.45% 2.74 MiB p/s ETA 5s29.62 MiB / 45.05 MiB [-------------------------------->________________] 65.77% 2.74 MiB p/s ETA 5s30.20 MiB / 45.05 MiB [-------------------------------->________________] 67.05% 2.75 MiB p/s ETA 5s30.78 MiB / 45.05 MiB [--------------------------------->_______________] 68.33% 2.75 MiB p/s ETA 5s31.38 MiB / 45.05 MiB [---------------------------------->______________] 69.65% 2.75 MiB p/s ETA 4s31.94 MiB / 45.05 MiB [---------------------------------->______________] 70.90% 2.76 MiB p/s ETA 4s32.53 MiB / 45.05 MiB [----------------------------------->_____________] 72.22% 2.76 MiB p/s ETA 4s33.08 MiB / 45.05 MiB [----------------------------------->_____________] 73.43% 2.76 MiB p/s ETA 4s33.66 MiB / 45.05 MiB [------------------------------------>____________] 74.71% 2.76 MiB p/s ETA 4s34.25 MiB / 45.05 MiB [------------------------------------->___________] 76.03% 2.76 MiB p/s ETA 3s34.69 MiB / 45.05 MiB [------------------------------------->___________] 77.00% 2.76 MiB p/s ETA 3s35.38 MiB / 45.05 MiB [-------------------------------------->__________] 78.53% 2.77 MiB p/s ETA 3s35.89 MiB / 45.05 MiB [--------------------------------------->_________] 79.67% 2.77 MiB p/s ETA 3s36.41 MiB / 45.05 MiB [--------------------------------------->_________] 80.82% 2.77 MiB p/s ETA 3s36.95 MiB / 45.05 MiB [---------------------------------------->________] 82.03% 2.76 MiB p/s ETA 2s37.53 MiB / 45.05 MiB [---------------------------------------->________] 83.32% 2.76 MiB p/s ETA 2s38.12 MiB / 45.05 MiB [----------------------------------------->_______] 84.63% 2.76 MiB p/s ETA 2s38.69 MiB / 45.05 MiB [------------------------------------------>______] 85.88% 2.77 MiB p/s ETA 2s39.25 MiB / 45.05 MiB [------------------------------------------>______] 87.13% 2.77 MiB p/s ETA 2s39.81 MiB / 45.05 MiB [------------------------------------------->_____] 88.38% 2.77 MiB p/s ETA 1s40.38 MiB / 45.05 MiB [------------------------------------------->_____] 89.63% 2.77 MiB p/s ETA 1s40.95 MiB / 45.05 MiB [-------------------------------------------->____] 90.91% 2.77 MiB p/s ETA 1s41.50 MiB / 45.05 MiB [--------------------------------------------->___] 92.13% 2.77 MiB p/s ETA 1s42.08 MiB / 45.05 MiB [--------------------------------------------->___] 93.41% 2.78 MiB p/s ETA 1s42.69 MiB / 45.05 MiB [---------------------------------------------->__] 94.76% 2.78 MiB p/s ETA 0s43.25 MiB / 45.05 MiB [----------------------------------------------->_] 96.01% 2.78 MiB p/s ETA 0s43.81 MiB / 45.05 MiB [----------------------------------------------->_] 97.26% 2.78 MiB p/s ETA 0s44.39 MiB / 45.05 MiB [------------------------------------------------>] 98.54% 2.78 MiB p/s ETA 0s44.97 MiB / 45.05 MiB [------------------------------------------------>] 99.83% 2.78 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.74 MiB p/
+[trivy-scan-image : trivy-scan] s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.74 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.74 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.56 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.56 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.56 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.40 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.40 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [----------------------------------------------->] 100.00% 2.40 MiB p/s ETA 0s45.05 MiB / 45.05 MiB [---------------------------------------------------] 100.00% 2.52 MiB p/s 18s2024-04-16T21:34:46.064Z	INFO	Vulnerability scanning is enabled
+[trivy-scan-image : trivy-scan] 2024-04-16T21:34:46.064Z	INFO	Secret scanning is enabled
+[trivy-scan-image : trivy-scan] 2024-04-16T21:34:46.064Z	INFO	If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+[trivy-scan-image : trivy-scan] 2024-04-16T21:34:46.064Z	INFO	Please see also https://aquasecurity.github.io/trivy/v0.43/docs/scanner/secret/#recommendation for faster secret detection
+[trivy-scan-image : trivy-scan] 2024-04-16T21:34:50.274Z	INFO	Number of language-specific files: 0
+[trivy-scan-image : trivy-scan] {
+[trivy-scan-image : trivy-scan]   "SchemaVersion": 2,
+[trivy-scan-image : trivy-scan]   "ArtifactName": "fsubasi/tekton:main-e52dbbe0-1713303142",
+[trivy-scan-image : trivy-scan]   "ArtifactType": "container_image",
+[trivy-scan-image : trivy-scan]   "Metadata": {
+[trivy-scan-image : trivy-scan]     "ImageID": "sha256:a1c69eef300e4f21fa9b4e52249e1b405be1c714b1f51f9acc271f0cfce0699b",
+[trivy-scan-image : trivy-scan]     "DiffIDs": [
+[trivy-scan-image : trivy-scan]       "sha256:558e6676acbe29f5822aa92c9bd4c1bcf2545004795c3ada32f0d659df15e7a5"
+[trivy-scan-image : trivy-scan]     ],
+[trivy-scan-image : trivy-scan]     "RepoTags": [
+[trivy-scan-image : trivy-scan]       "fsubasi/tekton:main-e52dbbe0-1713303142"
+[trivy-scan-image : trivy-scan]     ],
+[trivy-scan-image : trivy-scan]     "RepoDigests": [
+[trivy-scan-image : trivy-scan]       "fsubasi/tekton@sha256:1c8810c42ff8880911815018f3f9e37b467026e980a7853194560dbebf31e763"
+[trivy-scan-image : trivy-scan]     ],
+[trivy-scan-image : trivy-scan]     "ImageConfig": {
+[trivy-scan-image : trivy-scan]       "architecture": "arm64",
+[trivy-scan-image : trivy-scan]       "created": "2024-04-16T21:34:05.486058467Z",
+[trivy-scan-image : trivy-scan]       "history": [
+[trivy-scan-image : trivy-scan]         {
+[trivy-scan-image : trivy-scan]           "author": "kaniko",
+[trivy-scan-image : trivy-scan]           "created": "0001-01-01T00:00:00Z",
+[trivy-scan-image : trivy-scan]           "created_by": "COPY --from=build /go/app /bin/"
+[trivy-scan-image : trivy-scan]         }
+[trivy-scan-image : trivy-scan]       ],
+[trivy-scan-image : trivy-scan]       "os": "linux",
+[trivy-scan-image : trivy-scan]       "rootfs": {
+[trivy-scan-image : trivy-scan]         "type": "layers",
+[trivy-scan-image : trivy-scan]         "diff_ids": [
+[trivy-scan-image : trivy-scan]           "sha256:558e6676acbe29f5822aa92c9bd4c1bcf2545004795c3ada32f0d659df15e7a5"
+[trivy-scan-image : trivy-scan]         ]
+[trivy-scan-image : trivy-scan]       },
+[trivy-scan-image : trivy-scan]       "config": {
+[trivy-scan-image : trivy-scan]         "Cmd": [
+[trivy-scan-image : trivy-scan]           "app"
+[trivy-scan-image : trivy-scan]         ],
+[trivy-scan-image : trivy-scan]         "Env": [
+[trivy-scan-image : trivy-scan]           "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+[trivy-scan-image : trivy-scan]         ],
+[trivy-scan-image : trivy-scan]         "ExposedPorts": {
+[trivy-scan-image : trivy-scan]           "8080/tcp": {}
+[trivy-scan-image : trivy-scan]         }
+[trivy-scan-image : trivy-scan]       }
+[trivy-scan-image : trivy-scan]     }
+[trivy-scan-image : trivy-scan]   }
+[trivy-scan-image : trivy-scan] }
+
+[deploy : helm-upgrade] Release "go-app" does not exist. Installing it now.
+[deploy : helm-upgrade] NAME: go-app
+[deploy : helm-upgrade] LAST DEPLOYED: Tue Apr 16 21:35:06 2024
+[deploy : helm-upgrade] NAMESPACE: go-app
+[deploy : helm-upgrade] STATUS: deployed
+[deploy : helm-upgrade] REVISION: 1
+[deploy : helm-upgrade] TEST SUITE: None
+
+Waiting for app pod in go-app namespace to be ready...
+The pod is ready!
+running the app on your browser!
+|-----------|------|-------------|---------------------------|
+| NAMESPACE | NAME | TARGET PORT |            URL            |
+|-----------|------|-------------|---------------------------|
+| go-app    | go   |        8080 | http://192.168.49.2:31541 |
+|-----------|------|-------------|---------------------------|
+🏃  Starting tunnel for service go.
+|-----------|------|-------------|------------------------|
+| NAMESPACE | NAME | TARGET PORT |          URL           |
+|-----------|------|-------------|------------------------|
+| go-app    | go   |             | http://127.0.0.1:64886 |
+|-----------|------|-------------|------------------------|
+🎉  Opening service go-app/go in default browser...
+❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.

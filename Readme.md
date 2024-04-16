@@ -20,15 +20,35 @@ This repository showcases a sample Tekton Pipeline designed to perform the follo
 
 ## Steps
 
+There is an `install.sh` script that helps users to create their first pipeline with one click. If you prefer this method, you will a running pipeline and finally a running application in your browser. If you wonder what will happen when you run this script, please check `install-script-output.txt`. All you need is a running docker daemon (I used docker-desktop for mac).
+
+If you want your pipeline to be triggered automatically after any push or PR activity, you can continue by jumping to step 5 after running the `install.sh` script, or you can do everything by yourself, starting from the first step.
+
 1. Create and configure a Minikube cluster by applying the following commands:
 
    ```bash
    brew install minikube  # Edit for your OS if needed
    minikube start
    kubectl create rolebinding admin --clusterrole admin --serviceaccount default:default
-   kubectl create secret generic dockerhub-creds --from-file=config.json=/<path-to-your-config.json>
    kubectl create namespace go-app
    ```
+   Create docker credentials.
+
+   ```bash
+   kubectl create secret generic dockerhub-creds --from-file=config.json=/<path-to-your-config.json>
+   ```
+   Your config.json content should be like below:
+
+   ```bash
+      {
+      "auths": {
+        "https://index.docker.io/v1/": {
+          "auth": "SCSDFAFGEASCX", #base64 encoded version of your docker_username:password
+          "email": "your-email@example.com"
+        }
+      }
+    }
+   ```  
 
     *You will need an admin privilage to apply pipeline resources.*
 
@@ -38,88 +58,88 @@ This repository showcases a sample Tekton Pipeline designed to perform the follo
   
    The Tekton hub is a web based platform for developers to discover, share and contribute tasks and pipelines for Tekton. For mor information you can visit [https://github.com/tektoncd/hub]
 
-  ```bash    
-    kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.4/git-clone.yaml
+    ```bash    
+      kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.4/git-clone.yaml
 
-    kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/trivy-scanner/0.2/trivy-scanner.yaml
+      kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/trivy-scanner/0.2/trivy-scanner.yaml
 
-    kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/kaniko/0.4/kaniko.yaml
+      kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/kaniko/0.4/kaniko.yaml
 
-    kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/golang-build/0.3/golang-build.yaml
+      kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/golang-build/0.3/golang-build.yaml
 
-    kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/golang-test/0.2/golang-test.yaml
-  ```  
+      kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/golang-test/0.2/golang-test.yaml
+    ```  
 
     You can apply them via tekton cli as well.
 
-  ```bash 
-    tkn hub install task git-clone
+    ```bash 
+      tkn hub install task git-clone
 
-    tkn hub install task golang-build
+      tkn hub install task golang-build
 
-    tkn hub install task golang-test
+      tkn hub install task golang-test
 
-    tkn hub install task kaniko
+      tkn hub install task kaniko
 
-    tkn hub install task trivy-scanner
+      tkn hub install task trivy-scanner
   ```  
   
 3. Create role and rolebinding for helm deployment process.
 
-  ```bash
-  kubectl apply -f - <<EOF
-  apiVersion: rbac.authorization.k8s.io/v1
-  kind: Role
-  metadata:
-    namespace: go-app
-    name: helm-deploy-role
-  rules:
-  - apiGroups: [""]
-    resources: ["secrets", "services", "pods", "deployments", "configmaps", "services/finalizers"]
-    verbs: ["get", "list", "create", "update", "delete", "patch"]
-  - apiGroups: ["apps"]
-    resources: ["deployments", replicasets]
-    verbs: ["get", "list", "create", "update", "delete", "patch"]
-  ---
-  apiVersion: rbac.authorization.k8s.io/v1
-  kind: RoleBinding
-  metadata:
-    name: helm-deploy-role-binding
-    namespace: go-app
-  subjects:
-  - kind: ServiceAccount
-    name: default
-    namespace: default
-  roleRef:
+    ```bash
+    kubectl apply -f - <<EOF
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: Role
-    name: helm-deploy-role
-    apiGroup: rbac.authorization.k8s.io
-  EOF
-  ```
+    metadata:
+      namespace: go-app
+      name: helm-deploy-role
+    rules:
+    - apiGroups: [""]
+      resources: ["secrets", "services", "pods", "deployments", "configmaps", "services/finalizers"]
+      verbs: ["get", "list", "create", "update", "delete", "patch"]
+    - apiGroups: ["apps"]
+      resources: ["deployments", replicasets]
+      verbs: ["get", "list", "create", "update", "delete", "patch"]
+    ---
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      name: helm-deploy-role-binding
+      namespace: go-app
+    subjects:
+    - kind: ServiceAccount
+      name: default
+      namespace: default
+    roleRef:
+      kind: Role
+      name: helm-deploy-role
+      apiGroup: rbac.authorization.k8s.io
+    EOF
+    ```
 
   *You will need this privilage for helm deployment.*
 
 4. Clone this repository and apply the required Files
   
-  ```bash
-   git clone https://github.com/fsubasi/tekton-cicd.git
+    ```bash
+    git clone https://github.com/fsubasi/tekton-cicd.git
 
-   cd /tekton
+    cd /tekton
 
-   kubectl apply -f ./helm-upgrade.yaml
+    kubectl apply -f ./helm-upgrade.yaml
 
-   kubectl apply -f ./pipeline.yaml
+    kubectl apply -f ./pipeline.yaml
 
-   kubectl apply -f ./trigger-binding.yaml
- 
-   kubectl apply -f ./trigger-template.yaml
+    kubectl apply -f ./trigger-binding.yaml
+  
+    kubectl apply -f ./trigger-template.yaml
 
-   kubectl apply -f ./event-listener.yaml
+    kubectl apply -f ./event-listener.yaml
 
-   kubectl apply -f ./rbac-for-trigger/rbac.yaml
+    kubectl apply -f ./rbac-for-trigger/rbac.yaml
 
-   kubectl create -f ./pipelinerun.yaml
-   ```
+    kubectl create -f ./pipelinerun.yaml
+    ```
 
   *In order to trigger the pipeline manually, you need to run `kubectl create` command instead of `kubectl apply` because you cannot use generate name with apply.*
 
@@ -131,44 +151,44 @@ This repository showcases a sample Tekton Pipeline designed to perform the follo
 
 6. Congrats if your pipeline has been completed with these logs.
 
-  ```bash
-  [deploy : helm-upgrade] Release "go-app" has been upgraded. Happy Helming!
-  [deploy : helm-upgrade] NAME: go-app
-  [deploy : helm-upgrade] LAST DEPLOYED: Tue Apr  9 22:44:43 2024
-  [deploy : helm-upgrade] NAMESPACE: go-app
-  [deploy : helm-upgrade] STATUS: deployed
-  [deploy : helm-upgrade] REVISION: 2
-  [deploy : helm-upgrade] TEST SUITE: None
-  ```
+    ```bash
+    [deploy : helm-upgrade] Release "go-app" has been upgraded. Happy Helming!
+    [deploy : helm-upgrade] NAME: go-app
+    [deploy : helm-upgrade] LAST DEPLOYED: Tue Apr  9 22:44:43 2024
+    [deploy : helm-upgrade] NAMESPACE: go-app
+    [deploy : helm-upgrade] STATUS: deployed
+    [deploy : helm-upgrade] REVISION: 2
+    [deploy : helm-upgrade] TEST SUITE: None
+    ```
 7. Check if your application pod is running in the specified namespace.
   
-  ```bash
-  kubectl get pods -n go-app
-  NAME                             READY   STATUS    RESTARTS   AGE
-  go-deployment-7db9d9545d-8vn4w   1/1     Running   0          33s
-  ```
+    ```bash
+    kubectl get pods -n go-app
+    NAME                             READY   STATUS    RESTARTS   AGE
+    go-deployment-7db9d9545d-8vn4w   1/1     Running   0          33s
+    ```
 8. Check if your NodePort service has been deployed properly.
 
-```bash
-  kubectl get service -n go-app
-  NAME   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-  go     NodePort   10.104.106.133   <none>        8080:31541/TCP   49m  
-```
+  ```bash
+    kubectl get service -n go-app
+    NAME   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+    go     NodePort   10.104.106.133   <none>        8080:31541/TCP   49m  
+  ```
 9. You can reach the application from browser by running the `minikube service go --namespace go-app` . This will redirect you to the browser by printing this lines.
 
-  |-----------|------|-------------|---------------------------|
-  | NAMESPACE | NAME | TARGET PORT |            URL            |
-  |-----------|------|-------------|---------------------------|
-  | go-app    | go   |        8080 | http://192.168.49.2:31541 |
-  |-----------|------|-------------|---------------------------|
-  🏃  Starting tunnel for service go.
-  |-----------|------|-------------|------------------------|
-  | NAMESPACE | NAME | TARGET PORT |          URL           |
-  |-----------|------|-------------|------------------------|
-  | go-app    | go   |             | http://127.0.0.1:49240 |
-  |-----------|------|-------------|------------------------|
-  🎉  Opening service go-app/go in default browser...
-  ❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
+    |-----------|------|-------------|---------------------------|
+    | NAMESPACE | NAME | TARGET PORT |            URL            |
+    |-----------|------|-------------|---------------------------|
+    | go-app    | go   |        8080 | http://192.168.49.2:31541 |
+    |-----------|------|-------------|---------------------------|
+    🏃  Starting tunnel for service go.
+    |-----------|------|-------------|------------------------|
+    | NAMESPACE | NAME | TARGET PORT |          URL           |
+    |-----------|------|-------------|------------------------|
+    | go-app    | go   |             | http://127.0.0.1:49240 |
+    |-----------|------|-------------|------------------------|
+    🎉  Opening service go-app/go in default browser...
+    ❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
 
 
   Here we go!
