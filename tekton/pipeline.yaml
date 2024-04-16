@@ -112,7 +112,6 @@ spec:
       kind: Task
     runAfter:
       - fetch-repo
-      - run-build
     params:
       - name: ARGS
         value:
@@ -185,7 +184,7 @@ spec:
     runAfter:
     - misc
     - run-build
-    - trivy-scan-local-fs
+    - run-test
     workspaces:
     - name: source
       workspace: shared-data
