@@ -50,13 +50,21 @@ If you want your pipeline to be triggered automatically after any push or PR act
     }
    ```  
 
-    *You will need an admin privilage to apply pipeline resources.*
+    *You will need an admin privilege to apply pipeline resources.*
 
     *You will need to have dockerhub-creds secret if your docker registry is private.*
 
-2. Apply Required Tasks from TektonHub
+2. Apply tekton pipeline resources.
+   
+    ```
+    kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
+    ```
+
+3. Apply Required Tasks from TektonHub
   
    The Tekton hub is a web based platform for developers to discover, share and contribute tasks and pipelines for Tekton. For mor information you can visit [https://github.com/tektoncd/hub]
+
+   *Before running the commands below, be sure that all pods in the tekton-pipelines are ready.*
 
     ```bash    
       kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.4/git-clone.yaml
@@ -82,11 +90,11 @@ If you want your pipeline to be triggered automatically after any push or PR act
       tkn hub install task kaniko
 
       tkn hub install task trivy-scanner
-  ```  
+    ```  
   
-3. Create role and rolebinding for helm deployment process.
+4. Create role and rolebinding for helm deployment process
 
-    ```bash
+    ```
     kubectl apply -f - <<EOF
     apiVersion: rbac.authorization.k8s.io/v1
     kind: Role
@@ -117,14 +125,14 @@ If you want your pipeline to be triggered automatically after any push or PR act
     EOF
     ```
 
-  *You will need this privilage for helm deployment.*
+    *You will need this privilege for helm deployment.*
 
-4. Clone this repository and apply the required Files
+5. Clone this repository and apply the required Files
   
     ```bash
     git clone https://github.com/fsubasi/tekton-cicd.git
 
-    cd /tekton
+    cd tekton-cicd/tekton
 
     kubectl apply -f ./helm-upgrade.yaml
 
@@ -141,15 +149,15 @@ If you want your pipeline to be triggered automatically after any push or PR act
     kubectl create -f ./pipelinerun.yaml
     ```
 
-  *In order to trigger the pipeline manually, you need to run `kubectl create` command instead of `kubectl apply` because you cannot use generate name with apply.*
+    *In order to trigger the pipeline manually, you need to run `kubectl create` command instead of `kubectl apply` because you cannot use generate name with apply.*
 
-5. Follow the instructions [here](https://dev.to/leandronsp/tekton-ci-part-iii-listen-to-github-events-1h3i) to setup pipeline trigger, ngrok and github webhook.
+6. Follow the instructions [here](https://dev.to/leandronsp/tekton-ci-part-iii-listen-to-github-events-1h3i) to setup pipeline trigger, ngrok and github webhook.
 
    After completing this steps, your pipeline will be triggered automatically in any PR or push actions.
 
    *You will need to sign up the ngrok to complete those steps.*
 
-6. Congrats if your pipeline has been completed with these logs.
+7. Congrats if your pipeline has been completed with these logs.
 
     ```bash
     [deploy : helm-upgrade] Release "go-app" has been upgraded. Happy Helming!
@@ -160,21 +168,21 @@ If you want your pipeline to be triggered automatically after any push or PR act
     [deploy : helm-upgrade] REVISION: 2
     [deploy : helm-upgrade] TEST SUITE: None
     ```
-7. Check if your application pod is running in the specified namespace.
+8. Check if your application pod is running in the specified namespace.
   
     ```bash
     kubectl get pods -n go-app
     NAME                             READY   STATUS    RESTARTS   AGE
     go-deployment-7db9d9545d-8vn4w   1/1     Running   0          33s
     ```
-8. Check if your NodePort service has been deployed properly.
+9. Check if your NodePort service has been deployed properly.
 
-  ```bash
-    kubectl get service -n go-app
-    NAME   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-    go     NodePort   10.104.106.133   <none>        8080:31541/TCP   49m  
-  ```
-9. You can reach the application from browser by running the `minikube service go --namespace go-app` . This will redirect you to the browser by printing this lines.
+    ```bash
+      kubectl get service -n go-app
+      NAME   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+      go     NodePort   10.104.106.133   <none>        8080:31541/TCP   49m  
+    ```
+10. You can reach the application from browser by running the `minikube service go --namespace go-app` . This will redirect you to the browser by printing this lines.
 
     |-----------|------|-------------|---------------------------|
     | NAMESPACE | NAME | TARGET PORT |            URL            |
@@ -210,7 +218,7 @@ If you want your pipeline to be triggered automatically after any push or PR act
 
     `tkn pipelinerun logs --follow --last`
 
-4. Sometimes, ngrok dns might be changed if you are using the free version. At this time, you need to update the payload url of the github webhook with the new dns here.
+4. Sometimes, ngrok dns might be changed if you use the free version. At this time, you need to update the payload url of the github webhook with the new dns here.
    
 
     ![ngrok-url](/images/image-1.png)
