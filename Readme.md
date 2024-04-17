@@ -20,9 +20,9 @@ This repository showcases a sample Tekton Pipeline designed to perform the follo
 
 ## Steps
 
-There is an `install.sh` script that helps users to create their first pipeline with one click. If you prefer this method, you will a running pipeline and finally a running application in your browser. If you wonder what will happen when you run this script, please check `install-script-output.txt`. All you need is a running docker daemon (I used docker-desktop for mac).
+There is an `install.sh` script that helps users to create their first pipeline with one click. If you prefer this method, you will have a running pipeline and finally a running application in your browser. If you wonder what will happen when you run this script, please check `install-script-output.txt`. All you need is a running docker daemon (I used docker-desktop for mac).
 
-If you want your pipeline to be triggered automatically after any push or PR activity, you can continue by jumping to step 5 after running the `install.sh` script, or you can do everything by yourself, starting from the first step.
+If you want your pipeline to be triggered automatically after any push or PR activity, you can continue by jumping to step 6 after running the `install.sh` script, or you can do everything by yourself, starting from the first step.
 
 1. Create and configure a Minikube cluster by applying the following commands:
 
